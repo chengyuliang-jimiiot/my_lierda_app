@@ -1,0 +1,13 @@
+[33mc396940[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33mc396940[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{1}: checkout: moving from 810d0c417abefdd55c316176859d9b3398ed9730 to master
+[33m810d0c4[m HEAD@{2}: commit: fix
+[33m1c6dbb7[m HEAD@{3}: commit: Add device info read and output
+[33mffb6d5b[m HEAD@{4}: reset: moving to HEAD~
+[33m416e0f0[m HEAD@{5}: commit: Ìí¼ÓÉè±¸ÐÅÏ¢¶ÁÈ¡ÓëÊä³ö²âÊÔ
+[33mffb6d5b[m HEAD@{6}: commit: commit 2024/12/9 15:10
+[33mb9e8e36[m HEAD@{7}: commit: commit
+[33mc396940[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{8}: reset: moving to HEAD~
+[33md792a0c[m HEAD@{9}: commit: commit
+[33mc396940[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{10}: checkout: moving from master to c396940bc355c9e3794bae199d3c10c6e26d2762
+[33mc396940[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{11}: commit (amend): Create
+[33mf04b43c[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{12}: commit (initial): ´´½¨
