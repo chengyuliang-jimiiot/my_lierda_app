@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "EC71X_OPENSDK_V04.01_241025",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/project/ec7xx_0h00/ap/apps/lierda_app/inc",
+                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/project/ec7xx_0h00/ap/apps/lierda_app/system/inc",
+                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/middleware/**",
+                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/device/**",
+                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/driver/**",
+                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/os/**",
+                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/prebuild/**",
+                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/os/freertos/portable/gcc"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/tools/gcc/bin/arm-none-eabi-gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-arm"
+        }
+    ],
+    "version": 4
+}
