@@ -10,7 +10,7 @@
 #ifndef MY_MEM_CTRL_H
 #define MY_MEM_CTRL_H
 
-/*º¯ÊıÉùÃ÷*/
+/* function declaration */
 void my_free_buffer(char *buffer);
 char* my_create_buffer(unsigned short size);
 
