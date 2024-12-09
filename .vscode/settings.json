@@ -59,6 +59,9 @@
   "C_Cpp.errorSquiggles": "enabled",
   "files.associations": {
     "stdio.h": "c",
-    "lierda_app_main.h": "c"
+    "lierda_app_main.h": "c",
+    "string.h": "c",
+    "my_log.h": "c",
+    "my_mem_ctrl.h": "c"
   }
 }

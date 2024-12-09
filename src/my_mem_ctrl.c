@@ -11,7 +11,7 @@
 #include <string.h>
 #include "stdlib.h"
 
-#include "lierda_app_main.h"
+#include "my_log.h"
 
 #include "my_mem_ctrl.h"
 
@@ -29,7 +29,7 @@ char* my_create_buffer(void)
     char *buffer = (char *)malloc(MY_BUFFER_SIZE * sizeof(char));
     if (buffer == NULL) 
     {
-        liot_trace("heap allocation failure");
+        my_simple_str_log("heap allocation failure");
         return NULL;
     }
     memset(buffer, 0, MY_BUFFER_SIZE);

@@ -10,7 +10,8 @@
 #ifndef MY_LOG_H
 #define MY_LOG_H
 
-void my_log();
+/*º¯ÊıÉùÃ÷*/
+void my_simple_str_log(const char *str);
 
 
 

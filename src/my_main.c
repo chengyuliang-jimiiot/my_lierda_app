@@ -11,11 +11,13 @@
 #include <string.h>
 #include "stdlib.h"
 
-#include "lierda_app_main.h"
+#include "my_mem_ctrl.h"
+#include "my_log.h"
+
 #include "liot_os.h"
 #include "liot_dev.h"
 
-#include "my_mem_ctrl.h"
+
 
 void liot_custom_demo_thread (void *argument)
 {
@@ -25,9 +27,9 @@ void liot_custom_demo_thread (void *argument)
     {   
         if (my_buffer != NULL)
         {
-            liot_trace("my_create_buffer success!");
+            my_simple_str_log("my_create_buffer success!_Mylog");
         }
-        liot_trace("HelloWorld!");
+        my_simple_str_log("HelloWorld!_Mylog");
         //liot_dev_get_imei();
         liot_rtos_task_sleep_ms(5000);
     }

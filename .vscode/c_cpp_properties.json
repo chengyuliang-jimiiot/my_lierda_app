@@ -11,7 +11,8 @@
                 "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/driver/**",
                 "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/os/**",
                 "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/prebuild/**",
-                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/os/freertos/portable/gcc"
+                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/os/freertos/portable/gcc",
+                "D:/EC71X_OPENSDK_V04.01_241025/SDK/PLAT/middleware/lierda_open/lierda_api/liot_service/inc"
             ],
             "defines": [
                 "_DEBUG",
