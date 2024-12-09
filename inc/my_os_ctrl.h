@@ -1,5 +1,5 @@
 /**
- * @File Name: my_log.h
+ * @File Name: my_os_ctrl.h
  * @brief  
  * @Author : chengyuliang email:chengyuliang@jimiiot.com
  * @Version : 1.0
@@ -7,16 +7,11 @@
  **
  */
 
-#ifndef MY_LOG_H
-#define MY_LOG_H
+#ifndef MY_OS_CTRL_H
+#define MY_OS_CTRL_H
 
 /* Lierda Header */
-#include "lierda_app_main.h"
-
-/*º¯ÊýÉùÃ÷*/
-void my_simple_str_log(const char *str);
-
-
+#include "liot_os.h"
 
 
 #endif

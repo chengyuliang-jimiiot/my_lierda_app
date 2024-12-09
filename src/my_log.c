@@ -10,22 +10,23 @@
 #include <string.h>
 #include "stdlib.h"
 
+/* My header */
 #include "my_log.h"
 
-#include "lierda_app_main.h"
-
-#ifdef __LIERDA_OCPU_API_H__
 /*
 *   @进行简单的字符串LOG输出
 *   @str:要输出的字符串内容
 */
 void my_simple_str_log(const char *str)
 {
+    #ifdef __LIERDA_OCPU_API_H__
     if (str != NULL) {
-        liot_trace("%s\n", str);
+        liot_trace("%s", str);
     } else {
-        liot_trace("String is NULL\n");
-    }    
+        liot_trace("String is NULL");
+    }
+    #elif
+    #endif // Lierda    
 }
 
-#endif //利尔达
+
