@@ -24,14 +24,14 @@ void my_free_buffer(char *buffer)
     }
 }
 
-char* my_create_buffer(void)
+char* my_create_buffer(unsigned short size)
 {
-    char *buffer = (char *)malloc(MY_BUFFER_SIZE * sizeof(char));
+    char *buffer = (char *)malloc(size * sizeof(char));
     if (buffer == NULL) 
     {
         my_simple_str_log("heap allocation failure");
         return NULL;
     }
-    memset(buffer, 0, MY_BUFFER_SIZE);
+    memset(buffer, 0, size);
     return buffer;
 }

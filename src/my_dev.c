@@ -1,5 +1,5 @@
 /**
- * @File Name: my_log.h
+ * @File Name: my_dev.c
  * @brief  
  * @Author : chengyuliang email:chengyuliang@jimiiot.com
  * @Version : 1.0
@@ -7,13 +7,5 @@
  **
  */
 
-#ifndef MY_LOG_H
-#define MY_LOG_H
+#include "my_log.h"
 
-/*º¯ÊýÉùÃ÷*/
-void my_simple_str_log(const char *str);
-
-
-
-
-#endif
