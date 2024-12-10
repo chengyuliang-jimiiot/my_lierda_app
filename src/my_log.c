@@ -13,9 +13,6 @@
 /* My header */
 #include "my_log.h"
 
-/* Lierda Header */
-#include "lierda_app_main.h"
-
 /*
 *   @进行简单的字符串LOG输出
 *   @str:要输出的字符串内容
