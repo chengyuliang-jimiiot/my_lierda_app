@@ -29,22 +29,24 @@ extern void my_uart_task_thread(void *argv);
 #define NORMAL_BUFFER_SIZE 32
 #define LARGE_BUFFER_SIZE 64
 
-#define DEVICE_INFO_GET 1
+#define DEVICE_INFO_GET 0
 #define HEAP_INFO_GET 1
-#define UART1_INFO_GET 1
+#define UART1_INFO_GET 0
 
 #define UART1_OPEN 1
 
+uint32_t g_time;
+
 #if UART1_OPEN
-    #define UART1_TASK_STACK_SIZE 4096
+    #define UART1_TASK_STACK_SIZE 10*1024
 
     static liot_StaticTask_t uart1_task_mem;
     static liot_task_t g_uart1_taskRef = NULL;
 
     __ALIGNED(8) static uint8_t uart1_task_stack[UART1_TASK_STACK_SIZE];
 
-    void create_uart1_task(void)
-    {
+    void my_create_uart1_task(void)
+    {      
         LiotOSStatus_t result = liot_rtos_task_create_static(
                                     &g_uart1_taskRef,
                                     UART1_TASK_STACK_SIZE,
@@ -56,17 +58,24 @@ extern void my_uart_task_thread(void *argv);
                                     NULL);
         if(result == 0)
         {
-            liot_trace("uart1 task create success %d, time:%d", result, liot_rtos_get_running_time());
+            liot_trace("uart1 task create success %d", result);
         }
         else
         {
-            liot_trace("uart1 task create fail %d, time:%d", result, liot_rtos_get_running_time());
-        }          
+            liot_trace("uart1 task create fail %d", result);
+        }              
     }
 #endif // UART1_OPEN
 
 void liot_custom_demo_thread (void *argument)
 {
+    liot_task_t cur_taskRef;
+    LiotOSStatus_t get_current_ref_err = liot_rtos_task_get_current_ref(&cur_taskRef);
+    if (get_current_ref_err != 0)
+    {
+        liot_trace("get_current_ref_err:%d", get_current_ref_err);
+    }
+
     #if DEVICE_INFO_GET
         liot_errcode_dev_e ret_get_imei, ret_get_firmware_version, ret_get_sn, ret_get_product_id, ret_get_firmware_subversion, ret_get_model, ret_get_modem_fun;
         char *imei_buffer = my_create_buffer(NORMAL_BUFFER_SIZE);
@@ -126,14 +135,16 @@ void liot_custom_demo_thread (void *argument)
     #endif // HEAP_INFO_GET
 
     #if UART1_OPEN
-        create_uart1_task();
+        my_create_uart1_task();
     #endif // UART1_OPEN
 
     while(1)
     {   
         liot_rtos_task_sleep_ms(5000);
+        g_time = liot_rtos_get_running_time();
         #if DEVICE_INFO_GET
             liot_trace("------------Device INFO------------");
+            liot_trace("time:%d", *g_time);
             liot_trace("IMEI(SIM0):%s  |ret=%d", imei_buffer, ret_get_imei);
             liot_trace("firmware_version:%s  |ret=%d", firmware_version_buffer, ret_get_firmware_version);
             liot_trace("SN(SIM0):%s  |ret=%d", sn_buffer, ret_get_sn);
@@ -145,6 +156,7 @@ void liot_custom_demo_thread (void *argument)
 
         #if HEAP_INFO_GET
             liot_trace("------------Heap INFO------------");
+            liot_trace("time:%d", g_time);
             liot_trace("total_heapsize:%d and avail_heapsize:%d  |ret=0x%X", heap_state.total_size, heap_state.avail_size, ret_memory_size_query);
         #endif // HEAP_INFO_GET
 
@@ -159,6 +171,7 @@ void liot_custom_demo_thread (void *argument)
             }    
             
             liot_trace("------------UART1 INFO------------");
+            liot_trace("time:%d", *g_time);
             liot_trace("ret_uart_get_dcbconfig:0x%X", ret_uart_get_dcbconfig);
             liot_trace("Uart1_baudrate:%d", uart1_dcbconfig.baudrate);
             #if 0
@@ -170,5 +183,6 @@ void liot_custom_demo_thread (void *argument)
             #endif
         #endif // UART1_INFO_GET
 
+        liot_trace("main_task_stack_space = %d", liot_rtos_task_get_stack_space(cur_taskRef));
     }
 }

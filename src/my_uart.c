@@ -87,11 +87,12 @@ void liot_uart_notify_cb(uint32 ind_type, liot_uart_port_number_e port, uint32 s
 void my_uart_task_thread (void *argument)
 {
 #ifdef _LIOT_UART_H_
-
-    #if 0
-    liot_task_t taskRef = NULL;
-    LiotOSStatus_t Status;
-    #endif
+    liot_task_t cur_taskRef;
+    LiotOSStatus_t get_current_ref_err = liot_rtos_task_get_current_ref(&cur_taskRef);
+    if (get_current_ref_err != 0)
+    {
+        liot_trace("get_current_ref_err:%d", get_current_ref_err);
+    }
 
     int ret                         = 0;
     liot_uart_config_s usart_config = {0};
@@ -102,11 +103,9 @@ void my_uart_task_thread (void *argument)
     usart_config.parity_bit         = LIOT_UART_PARITY_NONE;
     usart_config.isPrintfPort       = TRUE;
 
-    #if 0
-    Status = liot_rtos_task_get_current_ref(&taskRef);
-    #endif
 
-    liot_rtos_task_sleep_ms(5000);
+    liot_trace("my_uart_task_thread start");
+    liot_rtos_task_sleep_ms(10000);
     liot_trace("==========Uart1 Init: Baudrate-%d ==========\r\n", usart_config.baudrate);
 
     config_uart_bit_func(LIOT_UART_PORT_1);
@@ -122,16 +121,15 @@ void my_uart_task_thread (void *argument)
         liot_trace("uart1_open error !!!");
     }
 
+    liot_uart_tx_way_config(LIOT_UART_TX_DRIVER_DMA);
+
     while(1)
     {
-        liot_uart_write(LIOT_UART_PORT_1, (unsigned char *)"helloworld\n\n", 10);
-        printf("%s\r\n", "UART1 PRINTF TEST");
+        liot_trace("liot_uart_open:%d", ret);
+        liot_trace("UART1_task_stack_space = %d", liot_rtos_task_get_stack_space(cur_taskRef));
+        liot_uart_write(LIOT_UART_PORT_1, (unsigned char *)"AT\n", 2);
         liot_rtos_task_sleep_ms(1000);
     }
 
-    #if 0
-    liot_rtos_task_delete(taskRef);
-    #endif
-    
 #endif // Lierda
 }

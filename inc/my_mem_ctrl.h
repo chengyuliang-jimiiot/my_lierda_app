@@ -12,6 +12,6 @@
 
 /* function declaration */
 void my_free_buffer(char *buffer);
-char* my_create_buffer(unsigned short size);
+void* my_create_buffer(size_t buffer_size);
 
 #endif
