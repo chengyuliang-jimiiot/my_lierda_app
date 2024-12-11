@@ -18,71 +18,71 @@
 #include "my_gpio.h"
 #include "my_type.h"
 
-/* macro definition */
-#define LIOT_UART_RX_BUFF_SIZE 2048
-#define LIOT_UART_TX_BUFF_SIZE 2048
+#ifdef _LIOT_UART_H_
+    #define LIOT_UART_RX_BUFF_SIZE 2048
+    #define LIOT_UART_TX_BUFF_SIZE 2048
 
-extern const liot_uart_func_s liot_uart_pin_func[];
-__attribute__((used)) static bool config_uart_bit_func(int uartPort)
-{
-    int uart_tx_bit     = 0;
-    int uart_tx_func    = 0;
-    int uart_rx_bit     = 0;
-    int uart_rx_func    = 0;
-
-    if(liot_uart_pin_func[uartPort].port == LIOT_PORT_NONE)
-        return false;
-
-    uart_tx_bit = liot_uart_pin_func[uartPort].tx_pin;
-    uart_tx_func = liot_uart_pin_func[uartPort].tx_func;
-    uart_rx_bit = liot_uart_pin_func[uartPort].rx_pin;
-    uart_rx_func = liot_uart_pin_func[uartPort].rx_func;
-
-    if(uart_tx_bit == LIOT_UART_PIN_NONE || uart_tx_func != LIOT_UART_FUNC_NONE)
-        return false;
-
-    liot_pin_set_func(uart_tx_bit, uart_tx_func);
-    liot_pin_set_func(uart_rx_bit, uart_rx_func);
-
-    return true;
-}
-
-void liot_uart_notify_cb(uint32 ind_type, liot_uart_port_number_e port, uint32 size)
-{
-    unsigned char recv_buff[LIOT_UART_RX_BUFF_SIZE] = {0};
-    unsigned int real_size                          = 0;
-    int read_len                                    = 0;
-
-    liot_trace("UART port %d receive ind type:0x%x, receive data size:%d", port, ind_type, size);
-    switch (ind_type)
+    extern const liot_uart_func_s liot_uart_pin_func[];
+    __attribute__((used)) static bool config_uart_bit_func(int uartPort)
     {
-        case LIOT_UART_RX_OVERFLOW_IND: // rx buffer overflow
-        case LIOT_UART_RX_RECV_DATA_IND:
+        int uart_tx_bit     = 0;
+        int uart_tx_func    = 0;
+        int uart_rx_bit     = 0;
+        int uart_rx_func    = 0;
+
+        if(liot_uart_pin_func[uartPort].port == LIOT_PORT_NONE)
+            return false;
+
+        uart_tx_bit = liot_uart_pin_func[uartPort].tx_pin;
+        uart_tx_func = liot_uart_pin_func[uartPort].tx_func;
+        uart_rx_bit = liot_uart_pin_func[uartPort].rx_pin;
+        uart_rx_func = liot_uart_pin_func[uartPort].rx_func;
+
+        if(uart_tx_bit == LIOT_UART_PIN_NONE || uart_tx_func != LIOT_UART_FUNC_NONE)
+            return false;
+
+        liot_pin_set_func(uart_tx_bit, uart_tx_func);
+        liot_pin_set_func(uart_rx_bit, uart_rx_func);
+
+        return true;
+    }
+
+    void liot_uart_notify_cb(uint32 ind_type, liot_uart_port_number_e port, uint32 size)
+    {
+        unsigned char recv_buff[LIOT_UART_RX_BUFF_SIZE] = {0};
+        unsigned int real_size                          = 0;
+        int read_len                                    = 0;
+
+        liot_trace("UART port %d receive ind type:0x%x, receive data size:%d", port, ind_type, size);
+        switch (ind_type)
         {
-            while (size > 0)
+            case LIOT_UART_RX_OVERFLOW_IND: // rx buffer overflow
+            case LIOT_UART_RX_RECV_DATA_IND:
             {
-                real_size = MIN(size, LIOT_UART_RX_BUFF_SIZE);
-                read_len  = liot_uart_read(port, (unsigned char *)&recv_buff, real_size);
-                liot_trace("read_len=%d, recv_data=%s", read_len, recv_buff);
-                if ((read_len > 0) && (size >= read_len))
+                while (size > 0)
                 {
-                    size -= read_len;
+                    real_size = MIN(size, LIOT_UART_RX_BUFF_SIZE);
+                    read_len  = liot_uart_read(port, (unsigned char *)&recv_buff, real_size);
+                    liot_trace("read_len=%d, recv_data=%s", read_len, recv_buff);
+                    if ((read_len > 0) && (size >= read_len))
+                    {
+                        size -= read_len;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-                else
-                {
-                    break;
-                }
+                break;
             }
-            break;
-        }
-        case LIOT_UART_TX_FIFO_COMPLETE_IND:
-        {
-            liot_trace("tx fifo complete");
-            break;
+            case LIOT_UART_TX_FIFO_COMPLETE_IND:
+            {
+                liot_trace("tx fifo complete");
+                break;
+            }
         }
     }
-}
-
+#endif // Lierda
 
 void my_uart_task_thread (void *argument)
 {

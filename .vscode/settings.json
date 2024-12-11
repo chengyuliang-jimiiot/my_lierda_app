@@ -64,6 +64,8 @@
     "my_log.h": "c",
     "my_mem_ctrl.h": "c",
     "liot_dev.h": "c",
-    "time.h": "c"
+    "time.h": "c",
+    "my_dev.h": "c",
+    "my_network.h": "c"
   }
 }

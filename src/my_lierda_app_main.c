@@ -3,7 +3,7 @@
  * @brief  
  * @Author : chengyuliang email:chengyuliang@jimiiot.com
  * @Version : 1.0
- * @Update : 2024-12-10
+ * @Update : 2024-12-11
  **
  */
 
@@ -17,11 +17,7 @@
 #include "my_os_ctrl.h"
 #include "my_dev.h"
 #include "my_uart.h"
-
-
-
-/* extern */
-extern void my_uart_task_thread(void *argv);
+#include "my_network.h"
 
 /* macro definition */
 #define MINI_BUFFER_SIZE 8
@@ -29,11 +25,19 @@ extern void my_uart_task_thread(void *argv);
 #define NORMAL_BUFFER_SIZE 32
 #define LARGE_BUFFER_SIZE 64
 
-#define DEVICE_INFO_GET 0
-#define HEAP_INFO_GET 1
-#define UART1_INFO_GET 0
+/* Module switch */
+#define LIERDA_APP_MAIN_ENABLE 0 //是否启用该APP
+#define DEVICE_INFO_GET 0 //设备信息获取
+#define HEAP_INFO_GET 0 //堆信息获取
+#define UART1_INFO_GET 0 //URAT1信息获取
+#define UART1_OPEN 0 //UART1开启
+#define NETWORK_INIT 1 //网络初始化
+#define NETWORK_TEST 0
 
-#define UART1_OPEN 1
+#if LIERDA_APP_MAIN_ENABLE
+
+/* extern */
+extern void my_uart_task_thread(void *argv);
 
 uint32_t g_time;
 
@@ -75,6 +79,28 @@ void liot_custom_demo_thread (void *argument)
     {
         liot_trace("get_current_ref_err:%d", get_current_ref_err);
     }
+
+    liot_rtos_task_sleep_ms(5000);
+    g_time = liot_rtos_get_running_time();
+    liot_trace("time: %d", g_time);
+    liot_trace("main start");
+
+    #if NETWORK_INIT
+        int cid = 1;
+        uint8_t nSim = 0;
+
+        liot_rtos_task_sleep_ms(5000);
+        if(my_network_init(nSim, cid, LIOT_DATA_TYPE_IP, "APNTEST", "", "", LIOT_DATA_AUTH_TYPE_NONE) == false)
+        {
+            liot_trace("http liot_network_init failed!!!!");
+            //return;
+        }
+    #endif
+    #if NETWORK_TEST
+        liot_rtos_task_sleep_ms(5000);
+        liot_trace("NETWORK_TEST");
+        net_test();
+    #endif
 
     #if DEVICE_INFO_GET
         liot_errcode_dev_e ret_get_imei, ret_get_firmware_version, ret_get_sn, ret_get_product_id, ret_get_firmware_subversion, ret_get_model, ret_get_modem_fun;
@@ -142,6 +168,7 @@ void liot_custom_demo_thread (void *argument)
     {   
         liot_rtos_task_sleep_ms(5000);
         g_time = liot_rtos_get_running_time();
+        liot_trace("time: %d", g_time);
         #if DEVICE_INFO_GET
             liot_trace("------------Device INFO------------");
             liot_trace("time:%d", *g_time);
@@ -186,3 +213,4 @@ void liot_custom_demo_thread (void *argument)
         liot_trace("main_task_stack_space = %d", liot_rtos_task_get_stack_space(cur_taskRef));
     }
 }
+#endif
