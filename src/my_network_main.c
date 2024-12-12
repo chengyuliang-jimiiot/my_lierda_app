@@ -19,6 +19,7 @@
 #include "my_uart.h"
 #include "my_network.h"
 #include "my_http.h"
+#include "my_file.h"
 
 #define HTTP_TASK_STACK_SIZE 1024*4
 
@@ -31,7 +32,9 @@ uint8_t nSim = 0;
 void my_network_test_thread (void *argument)
 {
     uint32_t natmode;
-    
+    int ret_iplocfile = -1;
+    char *buffer = my_create_buffer(256);
+
     liot_rtos_task_get_current_ref(&g_network_main_taskRef);
 
     if(my_network_init(nSim, cid, LIOT_DATA_TYPE_IP, "APNTEST", "", "", LIOT_DATA_AUTH_TYPE_NONE) == false)
@@ -50,5 +53,16 @@ void my_network_test_thread (void *argument)
         liot_rtos_task_sleep_ms(5000);
         liot_trace("my_network_test_stack_space = %d", liot_rtos_task_get_stack_space(g_network_main_taskRef));
         liot_trace("natmode:%d", natmode);
+        ret_iplocfile = liot_file_exist(IP_LOC_INFO_FILE);
+        liot_trace("check iploc file exist. ret === (%d)", ret_iplocfile);
+        if (ret_iplocfile == 0)
+        {
+            my_open_file(IP_LOC_INFO_FILE, buffer);
+        }
+        else 
+        {
+            liot_trace("file does not exist!");
+        }
+
     }
 }

@@ -13,6 +13,7 @@
 #include "my_pdata.h"
 #include "my_log.h"
 #include "my_network_main.h"
+#include "my_file.h"
 
 static liot_sem_t http_semp;
 static liot_sem_t http_semp_end;
@@ -168,6 +169,7 @@ static int http_response_write_data_cb(liot_http_client_t *client, void *arg, ch
         memset(recv_buf, 0, size + 1);
         memcpy(recv_buf, data, size);
         liot_trace("===http_response_write_data_cb=== recv_buf:%s", recv_buf);
+        my_save_file(IP_LOC_INFO_FILE, recv_buf, size);
         liot_rtos_free(recv_buf);
         recv_buf = NULL;
     }
@@ -211,7 +213,6 @@ void my_http_task_thread(void *arg)
     if(http_method == LIOT_HTTPC_METHOD_GET)
     {
         char* httpUrl = get_pUrl();
-        liot_trace("%s", httpUrl);
         liot_trace("LIOT_HTTPC_METHOD_GET");
 
         if(liot_httpc_url_parse(httpUrl, url) == false)
