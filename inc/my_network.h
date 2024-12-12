@@ -3,7 +3,7 @@
  * @brief  
  * @Author : chengyuliang email:chengyuliang@jimiiot.com
  * @Version : 1.0
- * @Update : 2024-12-11
+ * @Update : 2024-12-12
  **
  */
 
@@ -18,7 +18,6 @@
 /* Lierda Header */
 #include "liot_datacall.h"
 #include "liot_fs_api.h"
-#include "liot_http.h"
 #include "liot_nw.h"
 #include "liot_sockets.h"
 

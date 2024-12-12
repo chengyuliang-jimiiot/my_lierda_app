@@ -3,7 +3,7 @@
  * @brief  
  * @Author : chengyuliang email:chengyuliang@jimiiot.com
  * @Version : 1.0
- * @Update : 2024-12-10
+ * @Update : 2024-12-12
  **
  */
 
@@ -18,6 +18,8 @@
 #include "my_gpio.h"
 #include "my_type.h"
 
+#define MY_UART_ENABLE 0 //是否启用该模块
+#if MY_UART_ENABLE
 #ifdef _LIOT_UART_H_
     #define LIOT_UART_RX_BUFF_SIZE 2048
     #define LIOT_UART_TX_BUFF_SIZE 2048
@@ -133,3 +135,4 @@ void my_uart_task_thread (void *argument)
 
 #endif // Lierda
 }
+#endif

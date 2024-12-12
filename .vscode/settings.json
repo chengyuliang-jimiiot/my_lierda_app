@@ -66,6 +66,8 @@
     "liot_dev.h": "c",
     "time.h": "c",
     "my_dev.h": "c",
-    "my_network.h": "c"
+    "my_network.h": "c",
+    "my_os_ctrl.h": "c",
+    "my_network_main.h": "c"
   }
 }
